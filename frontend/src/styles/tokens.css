@@ -1,0 +1,69 @@
+:root {
+  --sift-white: #ffffff;
+
+  --sift-custard-50: #fdf9f1;
+  --sift-custard-100: #faf1e0;
+  --sift-custard-300: #f3e0be;
+
+  --sift-flamingo-50: #fdf1f3;
+  --sift-flamingo-100: #f9dde2;
+  --sift-flamingo-400: #de8190;
+
+  --sift-brandy-700: #76372d;
+  --sift-brandy-800: #5e2b23;
+  --sift-ink: #2b1b18;
+
+  --sift-text-1: #2b1b18;
+  --sift-text-2: #6b5651;
+  --sift-text-3: #7d6b66;
+
+  --sift-line: #efe6e1;
+  --sift-line-strong: #e3d5ce;
+
+  --sift-pastel-rose: #f6c6ce;
+  --sift-pastel-peach: #f9d5b8;
+  --sift-pastel-butter: #f6e7b8;
+  --sift-pastel-mint: #cbe9d5;
+  --sift-pastel-sky: #cde4f5;
+  --sift-pastel-lavender: #dcd2f2;
+  --sift-spectrum: linear-gradient(
+    90deg,
+    var(--sift-pastel-rose),
+    var(--sift-pastel-peach),
+    var(--sift-pastel-butter),
+    var(--sift-pastel-mint),
+    var(--sift-pastel-sky),
+    var(--sift-pastel-lavender)
+  );
+
+  --sift-neon-flamingo: #ff3d83;
+  --sift-neon-mint: #2ee6a6;
+
+  --sift-shadow-xs: 0 1px 2px rgba(118, 55, 45, 0.06);
+  --sift-shadow-sm: 0 1px 2px rgba(118, 55, 45, 0.05), 0 4px 12px rgba(118, 55, 45, 0.06);
+  --sift-shadow-md: 0 2px 4px rgba(118, 55, 45, 0.05), 0 12px 32px rgba(118, 55, 45, 0.08);
+  --sift-shadow-lg: 0 4px 8px rgba(118, 55, 45, 0.05), 0 24px 56px rgba(118, 55, 45, 0.1);
+  --sift-glow-neon: 0 0 0 4px rgba(255, 61, 131, 0.14), 0 0 18px rgba(255, 61, 131, 0.22);
+
+  --sift-glass-bg: rgba(255, 255, 255, 0.62);
+  --sift-glass-edge: rgba(118, 55, 45, 0.08);
+  --sift-glass-highlight: inset 0 1px 0 rgba(255, 255, 255, 0.9), inset 0 -1px 0 rgba(118, 55, 45, 0.04);
+
+  --sift-r-sm: 8px;
+  --sift-r-md: 12px;
+  --sift-r-lg: 20px;
+  --sift-r-xl: 28px;
+  --sift-r-pill: 999px;
+  --sift-ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --sift-dur: 180ms;
+
+  --sift-canvas: #ffffff;
+  --sift-paper: #fae7de;
+  --sift-paper-deep: #f3d6c9;
+  --sift-mat: #fffcf8;
+  --sift-specimen-bg: #f1eae2;
+  --sift-plant-back: #eba3b1;
+  --sift-plant-front: #de8190;
+  --sift-shadow-paper: 0 1px 1px rgba(118, 55, 45, 0.08), 0 14px 30px rgba(118, 55, 45, 0.16);
+  --sift-r-poster: 28px;
+}

@@ -1,0 +1,158 @@
+.sift-login {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 24px;
+}
+
+.sift-login__top {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.sift-login__home {
+  padding: 0 8px;
+}
+
+.sift-login__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 36px;
+  padding: 6px 12px 6px 10px;
+  border: 1px solid var(--sift-line-strong);
+  border-radius: var(--sift-r-md);
+  background: var(--sift-white);
+  color: var(--sift-brandy-700);
+  font: 500 14px/1 var(--sift-font-body);
+  cursor: pointer;
+}
+
+.sift-login__back:hover {
+  border-color: var(--sift-brandy-700);
+}
+
+.sift-login__back svg {
+  transition: transform var(--sift-dur) var(--sift-ease);
+}
+
+.sift-login__back:hover svg {
+  transform: translateX(-3px);
+}
+
+.sift-login__panel {
+  flex: 1;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  column-gap: 64px;
+  align-items: center;
+  padding: 56px;
+}
+
+.sift-landing .sift-login__brand {
+  justify-self: center;
+  font-size: clamp(6rem, 17vw, 15rem);
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  color: var(--sift-brandy-700);
+}
+
+.sift-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+  max-width: 380px;
+}
+
+.sift-landing .sift-login__title {
+  font-size: clamp(2rem, 3.2vw, 2.75rem);
+  line-height: 1.1;
+  color: var(--sift-brandy-700);
+}
+
+.sift-login__sub {
+  margin-top: -8px;
+  color: var(--sift-text-2);
+}
+
+.sift-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--sift-text-1);
+}
+
+.sift-field input {
+  height: 44px;
+  padding: 0 14px;
+  border: 1px solid var(--sift-line-strong);
+  border-radius: var(--sift-r-md);
+  background: var(--sift-white);
+  font: 400 15px var(--sift-font-body);
+  color: var(--sift-text-1);
+}
+
+.sift-field input:focus-visible {
+  outline: 2px solid var(--sift-brandy-700);
+  outline-offset: 1px;
+}
+
+.sift-field input[aria-invalid="true"] {
+  border-color: var(--sift-neon-flamingo);
+}
+
+.sift-login__error {
+  font-size: 14px;
+  color: var(--sift-brandy-800);
+}
+
+.sift-login__submit {
+  justify-content: center;
+  width: 100%;
+  margin-top: 4px;
+}
+
+.sift-login__alt {
+  font-size: 14px;
+  color: var(--sift-text-2);
+}
+
+.sift-login__alt a {
+  color: var(--sift-brandy-700);
+}
+
+@media (max-width: 699px) {
+  .sift-login {
+    padding: 16px;
+  }
+
+  .sift-login__panel {
+    grid-template-columns: 1fr;
+    row-gap: 32px;
+    padding: 36px 20px;
+    border-radius: 20px;
+  }
+
+  .sift-landing .sift-login__brand {
+    font-size: clamp(5rem, 28vw, 8rem);
+  }
+
+  .sift-login__form {
+    justify-self: center;
+  }
+}
+
+.sift-login__switch {
+  padding: 0;
+  border: none;
+  background: none;
+  font: inherit;
+  color: var(--sift-brandy-700);
+  text-decoration: underline;
+  cursor: pointer;
+}

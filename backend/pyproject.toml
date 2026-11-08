@@ -1,0 +1,38 @@
+[project]
+name = "ai-document-analyzer-backend"
+version = "1.0.0"
+requires-python = ">=3.11"
+
+[tool.ruff]
+line-length = 100
+target-version = "py311"
+extend-exclude = [".venv", "data"]
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP", "SIM"]
+
+[tool.ruff.lint.per-file-ignores]
+"tests/**" = ["B017"]
+"app/prompts/analysis_prompt.py" = ["E501"]
+"app/intelligence/contradictions.py" = ["E501"]
+"app/intelligence/risks.py" = ["E501"]
+"app/intelligence/dependencies.py" = ["E501"]
+"app/prompts/intelligence_prompt.py" = ["E501"]
+"app/providers/mock_provider.py" = ["E501"]
+"app/providers/mock_samples.py" = ["E501"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "-q"
+markers = ["live: calls a real LLM provider (needs RUN_LIVE_TESTS=1 and LLM_API_KEY)"]
+filterwarnings = [
+    "ignore::DeprecationWarning:starlette.*",
+    "ignore:.*httpx2.*",
+]
+
+[tool.coverage.run]
+source = ["app"]
+
+[tool.coverage.report]
+show_missing = true
+skip_covered = true
