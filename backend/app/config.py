@@ -4,7 +4,7 @@ import os
 from functools import lru_cache
 from typing import Literal
 
-from pydantic import Field, SecretStr, field_validator
+from pydantic import AliasChoices, Field, SecretStr, field_validator
 from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
@@ -43,6 +43,11 @@ class Settings(BaseSettings):
     MAX_BODY_BYTES: int = Field(default=262_144, gt=0)
 
     DATABASE_PATH: str = "/tmp/analyses.db" if os.environ.get("VERCEL") else "./data/analyses.db"
+    DATABASE_URL: SecretStr = Field(
+        default=SecretStr(""),
+        repr=False,
+        validation_alias=AliasChoices("DATABASE_URL", "POSTGRES_URL"),
+    )
     SESSION_DAYS: int = Field(default=30, gt=0, le=365)
     CORS_ORIGINS: str = "http://localhost:5173"
     MOCK_LATENCY_MS: int = Field(default=300, ge=0)
@@ -58,6 +63,11 @@ class Settings(BaseSettings):
     @property
     def cors_origins_list(self) -> list[str]:
         return [o.strip() for o in self.CORS_ORIGINS.split(",") if o.strip()]
+
+    # Returns the Postgres URL when one is set, otherwise the SQLite file path.
+    @property
+    def database_target(self) -> str:
+        return self.DATABASE_URL.get_secret_value().strip() or self.DATABASE_PATH
 
     # Tells whether the app is running with the mock provider.
     @property

@@ -104,12 +104,13 @@ def create_app(settings: Settings | None = None, provider: LLMProvider | None = 
     settings = settings or get_settings()
     configure_logging(settings.LOG_LEVEL)
     register_secret(settings.LLM_API_KEY.get_secret_value())
+    register_secret(settings.DATABASE_URL.get_secret_value())
 
     # Validates config, prepares the database and creates the provider on startup.
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
         settings.validate_for_startup()
-        init_db(settings.DATABASE_PATH)
+        init_db(settings.database_target)
         app.state.provider = provider or build_provider(settings)
         logger.info(
             "startup provider=%s model=%s prompt_version=%s env=%s",

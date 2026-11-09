@@ -5,11 +5,11 @@ import hashlib
 import hmac
 import re
 import secrets
-import sqlite3
 import uuid
 from collections.abc import Callable
 from datetime import UTC, datetime, timedelta
 
+from app.db.database import INTEGRITY_ERRORS, Connection
 from app.domain.errors import (
     AuthRequiredError,
     EmailTakenError,
@@ -66,7 +66,7 @@ class AuthService:
     # Stores the connection, session lifetime and an injectable clock.
     def __init__(
         self,
-        conn: sqlite3.Connection,
+        conn: Connection,
         session_days: int,
         *,
         now: Callable[[], datetime] = lambda: datetime.now(UTC),
@@ -118,7 +118,7 @@ class AuthService:
                 "INSERT INTO users (id, email, password_hash, created_at) VALUES (?, ?, ?, ?)",
                 (user_id, email, hash_password(password), created_at),
             )
-        except sqlite3.IntegrityError:
+        except INTEGRITY_ERRORS:
             raise EmailTakenError() from None
         return self._start_session(user_id, email, created_at)
 

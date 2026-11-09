@@ -2,11 +2,12 @@ from __future__ import annotations
 
 import json
 import logging
-import sqlite3
 from datetime import UTC, datetime
+from typing import Any
 
 from pydantic import ValidationError
 
+from app.db.database import DB_ERRORS, Connection
 from app.domain.errors import InternalError
 from app.domain.schemas import (
     SUMMARY_PREVIEW_CHARS,
@@ -26,7 +27,7 @@ def _iso(dt: datetime) -> str:
 
 class AnalysisRepository:
     # Stores the connection and the owner whose analyses this repository can see and change.
-    def __init__(self, conn: sqlite3.Connection, user_id: str | None = None) -> None:
+    def __init__(self, conn: Connection, user_id: str | None = None) -> None:
         self._conn = conn
         self._user_id = user_id
 
@@ -55,7 +56,7 @@ class AnalysisRepository:
 
     # Turns a database row into an analysis record.
     @staticmethod
-    def _row_to_record(row: sqlite3.Row) -> AnalysisRecord:
+    def _row_to_record(row: Any) -> AnalysisRecord:
         result = AnalysisResult.model_validate(json.loads(row["result_json"]))
         return AnalysisRecord(
             id=row["id"],
@@ -158,5 +159,5 @@ class AnalysisRepository:
         try:
             self._conn.execute("SELECT 1").fetchone()
             return True
-        except sqlite3.Error:
+        except DB_ERRORS:
             return False

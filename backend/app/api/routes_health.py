@@ -1,13 +1,12 @@
 from __future__ import annotations
 
 import logging
-import sqlite3
 
 from fastapi import APIRouter
 
 from app import __version__
 from app.api.dependencies import ProviderDep, SettingsDep
-from app.db.database import connect
+from app.db.database import DB_ERRORS, connect
 from app.domain.schemas import HealthResponse
 from app.prompts.analysis_prompt import PROMPT_VERSION
 
@@ -20,12 +19,12 @@ logger = logging.getLogger(__name__)
 def health(settings: SettingsDep, provider: ProviderDep) -> HealthResponse:
     db_ok = True
     try:
-        conn = connect(settings.DATABASE_PATH)
+        conn = connect(settings.database_target)
         try:
             conn.execute("SELECT 1").fetchone()
         finally:
             conn.close()
-    except sqlite3.Error as exc:
+    except DB_ERRORS as exc:
         logger.error("health check database error=%s", type(exc).__name__)
         db_ok = False
     return HealthResponse(

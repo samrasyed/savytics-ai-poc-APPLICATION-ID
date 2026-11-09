@@ -9,6 +9,7 @@ dependencies = [
     "pydantic-settings>=2.3,<3",
     "openai>=1.40,<3",
     "httpx>=0.27,<1",
+    "psycopg[binary]>=3.2,<4",
 ]
 
 [tool.ruff]

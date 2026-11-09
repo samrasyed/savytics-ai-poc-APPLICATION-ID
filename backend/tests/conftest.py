@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import json
+import os
 import uuid
 from collections.abc import Iterator
 from pathlib import Path
@@ -73,8 +74,19 @@ class RecordingSleep:
 
 # Gives each test its own temporary database path.
 @pytest.fixture
-def db_path(tmp_path: Path) -> str:
-    return str(tmp_path / "data" / "analyses.db")
+def db_path(tmp_path: Path) -> Iterator[str]:
+    admin_url = os.environ.get("TEST_DATABASE_URL", "")
+    if not admin_url:
+        yield str(tmp_path / "data" / "analyses.db")
+        return
+    import psycopg
+
+    name = f"test_{uuid.uuid4().hex[:12]}"
+    with psycopg.connect(admin_url, autocommit=True) as admin:
+        admin.execute(f"CREATE DATABASE {name}")
+    yield admin_url.rsplit("/", 1)[0] + "/" + name
+    with psycopg.connect(admin_url, autocommit=True) as admin:
+        admin.execute(f"DROP DATABASE IF EXISTS {name} WITH (FORCE)")
 
 
 # Builds mock-mode test settings that ignore any .env file.

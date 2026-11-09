@@ -1,6 +1,5 @@
 from __future__ import annotations
 
-import sqlite3
 import time
 from collections.abc import Iterator
 from typing import Annotated
@@ -8,7 +7,7 @@ from typing import Annotated
 from fastapi import Depends, Header, Request
 
 from app.config import Settings
-from app.db.database import connect
+from app.db.database import Connection, connect
 from app.db.repository import AnalysisRepository
 from app.domain.errors import AuthRequiredError
 from app.domain.schemas import UserOut
@@ -30,8 +29,8 @@ def get_provider(request: Request) -> LLMProvider:
 # Opens a database connection for one request and closes it afterwards.
 def get_connection(
     settings: Annotated[Settings, Depends(get_app_settings)],
-) -> Iterator[sqlite3.Connection]:
-    conn = connect(settings.DATABASE_PATH)
+) -> Iterator[Connection]:
+    conn = connect(settings.database_target)
     try:
         yield conn
     finally:
@@ -48,7 +47,7 @@ def get_token(authorization: Annotated[str | None, Header()] = None) -> str:
 
 # Builds the auth service on the request's database connection.
 def get_auth_service(
-    conn: Annotated[sqlite3.Connection, Depends(get_connection)],
+    conn: Annotated[Connection, Depends(get_connection)],
     settings: Annotated[Settings, Depends(get_app_settings)],
 ) -> AuthService:
     return AuthService(conn, settings.SESSION_DAYS)
@@ -64,7 +63,7 @@ def get_current_user(
 
 # Wraps the request's database connection in a repository limited to the current user.
 def get_repository(
-    conn: Annotated[sqlite3.Connection, Depends(get_connection)],
+    conn: Annotated[Connection, Depends(get_connection)],
     user: Annotated[UserOut, Depends(get_current_user)],
 ) -> AnalysisRepository:
     return AnalysisRepository(conn, user.id)
