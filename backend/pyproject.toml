@@ -2,6 +2,14 @@
 name = "ai-document-analyzer-backend"
 version = "1.0.0"
 requires-python = ">=3.11"
+dependencies = [
+    "fastapi>=0.115,<1",
+    "uvicorn[standard]>=0.30,<1",
+    "pydantic>=2.7,<3",
+    "pydantic-settings>=2.3,<3",
+    "openai>=1.40,<3",
+    "httpx>=0.27,<1",
+]
 
 [tool.ruff]
 line-length = 100

@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import os
 from functools import lru_cache
 from typing import Literal
 
@@ -41,7 +42,7 @@ class Settings(BaseSettings):
     MAX_INPUT_CHARS: int = Field(default=50_000, gt=0)
     MAX_BODY_BYTES: int = Field(default=262_144, gt=0)
 
-    DATABASE_PATH: str = "./data/analyses.db"
+    DATABASE_PATH: str = "/tmp/analyses.db" if os.environ.get("VERCEL") else "./data/analyses.db"
     SESSION_DAYS: int = Field(default=30, gt=0, le=365)
     CORS_ORIGINS: str = "http://localhost:5173"
     MOCK_LATENCY_MS: int = Field(default=300, ge=0)
